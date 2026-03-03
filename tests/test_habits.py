@@ -1,21 +1,27 @@
-import os, sys, pytest
+import os, sys, pytest, gc, tempfile
 from datetime import datetime, timedelta
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 from modules.habit import Habit
 from modules.habit_manager import HabitManager
 from modules import analytics
 from modules import db_handler as db
-TEST_DB = os.path.join(os.path.dirname(__file__), "test_habits.db")
 
 
 @pytest.fixture(autouse=True)
-def clean_db():
+def clean_db(tmp_path):
+    """Use a unique temp file per test — avoids Windows file lock issues."""
+    global TEST_DB
+    TEST_DB = str(tmp_path / "test_habits.db")
     db.initialise_db(TEST_DB)
     yield
-    if os.path.exists(TEST_DB): os.remove(TEST_DB)
+    gc.collect()  # Force-close any lingering SQLite connections on Windows
+
 
 @pytest.fixture
 def manager(): return HabitManager(TEST_DB)
+
+
+TEST_DB = ""  # will be set by clean_db fixture
 
 class TestHabitCreation:
     def test_valid_daily(self):
