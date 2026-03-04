@@ -2,13 +2,13 @@
 
 This is a command-line Python application to **create, track, and analyse** daily and weekly habits that I developed as part of the IU course *Object Oriented and Functional Programming with Python (DLBDSOOFPP01)*.
 
----
+
 
 ## Project Overview
 
 This project demonstrates the design and implementation of a habit tracking system built entirely in Python. It focuses on combining **object-oriented programming (OOP)** and **functional programming (FP)** principles to deliver a clean, testable, and well-structured backend application.
 
-### Core Application Features
+### Core Features
 
 - Create, manage, and delete daily or weekly habits
 - Check off habits as completed
@@ -17,7 +17,7 @@ This project demonstrates the design and implementation of a habit tracking syst
 - Analyse habits using functional programming techniques
 - Fully tested with pytest
 
----
+
 
 ## Installation
 
@@ -42,7 +42,7 @@ source .venv/bin/activate        # macOS/Linux
 pip install -r requirements.txt
 ```
 
----
+
 
 ## Dependencies
 
@@ -53,7 +53,7 @@ pip install -r requirements.txt
 
 Both are lightweight, well-maintained, and standard choices for Python projects of this scope. `click` was chosen over a simple `input()` loop because it automatically generates help text, handles argument parsing, and keeps command logic cleanly separated from business logic.
 
----
+
 
 ## Usage
 
@@ -83,7 +83,7 @@ python src/main.py create --name "Meditate" --period daily
 python src/main.py checkoff --name "Meditate"
 ```
 
-### List all habits
+### List all the habits
 
 ```bash
 python src/main.py list
@@ -117,14 +117,13 @@ python src/main.py delete --name "Meditate"
 python src/main.py --help
 ```
 
----
 
-## Below I have included an Example Session
+## Session Example
 
 A typical end-to-end workflow from a fresh install:
 
 ```bash
-# Load the predefined habits and sample data
+# Loading the predefined habits and sample data
 python src/main.py seed
 cp src/data/sample_habits.db src/data/habits.db
 
@@ -154,7 +153,7 @@ python src/main.py streak --name "Drink 2L of water"
 python src/main.py analyse
 ```
 
----
+
 
 ## Running Tests
 
@@ -175,12 +174,12 @@ collected 36 items
 
 The test suite covers four areas:
 
-- **Habit creation** — valid and invalid periodicity, default timestamps, repr output
-- **Check-off logic** — completion recording, timestamp sorting, multiple completions per day
-- **Streak calculation** — consecutive daily streaks, weekly streaks, gap detection, edge cases with zero or single completions
-- **Analytics functions** — filtering by period, longest streak across all habits, longest streak for a single habit, current streaks, struggled habits
-- **HabitManager** — create, delete, check-off, duplicate detection, error handling
-- **Database persistence** — save and load habits, completion persistence, cascade delete, name existence checks
+- **Habit creation:** valid and invalid periodicity, default timestamps, repr output
+- **Check-off logic:** completion recording, timestamp sorting, multiple completions per day
+- **Streak calculation:** consecutive daily streaks, weekly streaks, gap detection, edge cases with zero or single completions
+- **Analytics functions:** filtering by period, longest streak across all habits, longest streak for a single habit, current streaks, struggled habits
+- **HabitManager:** create, delete, check-off, duplicate detection, error handling
+- **Database persistence:** save and load habits, completion persistence, cascade delete, name existence checks
 
 ---
 
@@ -213,13 +212,13 @@ habit_tracker/
 
 ### Object-Oriented Programming (OOP)
 
-The `Habit` class is the core model of the application. It encapsulates all habit-related data — name, periodicity, creation date, and completion history — along with the streak calculation logic. Key methods include `check_off()` which records a timestamped completion, `get_streak()` which calculates the current active streak counting backwards from today, and `get_longest_streak()` which scans the full completion history to find the highest consecutive period count.
+The `Habit` class is the core model of the application. It encapsulates all habit-related data; this includes the name, periodicity, creation date, and completion history — along with the streak calculation logic. Key methods include `check_off()` which records a timestamped completion, `get_streak()` which calculates the current active streak counting backwards from today, and `get_longest_streak()` which scans the full completion history to find the highest consecutive period count.
 
 The `HabitManager` class sits on top of this, handling all create, delete, check-off, and retrieval operations by coordinating between the `Habit` model and the database layer. This separation means the `Habit` class stays focused purely on domain logic, while `HabitManager` handles orchestration.
 
 ### Functional Programming (FP)
 
-The `analytics.py` module is implemented entirely using functional programming principles. All functions are pure — they take data in and return results without modifying any state or producing side effects. Specific examples:
+The `analytics.py` module is implemented entirely using functional programming principles. All functions are considered pure, they take data in and return results without modifying any state or producing side effects. Specific examples:
 
 - `get_habits_by_period(habits, period)` uses `filter` to return only habits matching the given periodicity
 - `get_current_streaks(habits)` uses `map` to transform each habit into a summary dictionary containing its name, period, and active streak
@@ -230,11 +229,10 @@ This design makes every analytics function independently testable and completely
 
 ### Persistence
 
-Data is stored in a local SQLite database using Python's built-in `sqlite3` module — no external database server required. Two tables are used: `habits` stores habit definitions and `completions` stores each individual check-off event, linked to its habit via a foreign key with CASCADE delete. This means deleting a habit automatically removes all its completion records. The relational structure keeps the data normalised and makes streak queries clean and efficient.
+Data is stored in a local SQLite database using Python's built-in `sqlite3` module, no external database server required. Two tables are used: `habits` stores habit definitions and `completions` stores each individual check-off event, linked to its habit via a foreign key with CASCADE delete. This means deleting a habit automatically removes all its completion records. The relational structure keeps the data normalised and makes streak queries clean and efficient.
 
-SQLite was chosen over a JSON file approach because it handles relational data more robustly, enforces referential integrity, and is more representative of real-world backend development — while still being entirely file-based and dependency-free.
+SQLite was chosen over a JSON file approach because it handles relational data more robustly, enforces referential integrity, and is more representative of real-world backend development while still being entirely file-based and dependency-free.
 
----
 
 ## Predefined Habits
 
@@ -250,7 +248,7 @@ The app ships with 5 predefined habits across both periods:
 
 Each habit includes 4 weeks of example completion data with intentional gaps to allow streak-breaking scenarios to be tested and demonstrated.
 
----
+
 
 ## Reflection
 
@@ -261,10 +259,5 @@ Keeping the analytics functions separate from the rest of the code turned out to
 If I were to do this again, I would probably create a separate class for completions rather than just storing datetime objects in a list. This would make it easier to add extra information to each check-off later on, like a note or a rating, without having to rework everything.
 
 Going forward, the app could be extended with a simple web interface, more detailed analytics like completion rates over time, and cloud storage so habits are not just saved locally.
----
-
-## Project Info
-
-**Course:** Object Oriented and Functional Programming with Python — DLBDSOOFPP01 (IU International University)
 
 **GitHub:** https://github.com/godfreyndlovu/oofpp_habits-tracker-project
