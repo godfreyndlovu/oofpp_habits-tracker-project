@@ -1,10 +1,10 @@
-# Habit Tracker
+# Habit Tracker ⏰
 
 This is a command-line Python application to **create, track, and analyse** daily and weekly habits that I developed as part of the IU course *Object Oriented and Functional Programming with Python (DLBDSOOFPP01)*.
 
 
 
-## Project Overview
+## Project Overview 💻
 
 This project demonstrates the design and implementation of a habit tracking system built entirely in Python. It focuses on combining **object-oriented programming (OOP)** and **functional programming (FP)** principles to deliver a clean, testable, and well-structured backend application.
 
@@ -19,7 +19,7 @@ This project demonstrates the design and implementation of a habit tracking syst
 
 
 
-## Installation
+## Installation ⚙️
 
 ### 1. Clone the repository
 
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
 
 
-## Dependencies
+## Dependencies 📦
 
 | Package | Purpose |
 |---|---|
@@ -55,7 +55,7 @@ Both are lightweight, well-maintained, and standard choices for Python projects 
 
 
 
-## Usage
+## Usage ⏳
 
 All commands are run from the project root.
 
@@ -118,7 +118,7 @@ python src/main.py --help
 ```
 
 
-## Session Example
+## Session Example ✅
 
 A typical end-to-end workflow from a fresh install:
 
@@ -155,7 +155,7 @@ python src/main.py analyse
 
 
 
-## Running Tests
+## Running Tests 🔎
 
 ```bash
 python -m pytest tests/ -v --disable-warnings
@@ -183,7 +183,7 @@ The test suite covers four areas:
 
 ---
 
-## Project Structure
+## Project Structure 📂
 
 ```
 habit_tracker/
@@ -208,7 +208,7 @@ habit_tracker/
 
 ---
 
-## Design and Implementation
+## Design and Implementation 🛠️
 
 ### Object-Oriented Programming (OOP)
 
@@ -234,7 +234,7 @@ Data is stored in a local SQLite database using Python's built-in `sqlite3` modu
 SQLite was chosen over a JSON file approach because it handles relational data more robustly, enforces referential integrity, and is more representative of real-world backend development while still being entirely file-based and dependency-free.
 
 
-## Predefined Habits
+## Predefined Habits 📝
 
 The app ships with 5 predefined habits across both periods:
 
@@ -250,7 +250,7 @@ Each habit includes 4 weeks of example completion data with intentional gaps to 
 
 
 
-## Reflection
+## Reflection 🧠
 
 One of the difficult parts of building this application was getting the streak calculation to work properly, especially for weekly habits around the start and end of the year where the week numbering doesn't always line up with the calendar year. It took some trial and error to figure out that Python's `date.isocalendar()` was the right tool for this purpose rather than just doing simple date arithmetic.
 
